@@ -1,3 +1,4 @@
-Pathlib
-ntlk
-pytest
+nltk==3.9.1,
+pathlib>=1.0.1,
+patlib>=0.3.7,
+pytest>=9.0.2,
