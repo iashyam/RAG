@@ -3,7 +3,7 @@ from nltk.stem import PorterStemmer
 
 def simplify(s: str):
     '''remove punctuations and make lowercase for a string'''
-    punctuations = string.punctuation #get all the punctuation makrs
+    punctuations = '''!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~''' #string.punctuation #get all the punctuation makrs
     trans_map = s.maketrans({p:"" for p in punctuations})
 
     return s.translate(trans_map).lower().strip()

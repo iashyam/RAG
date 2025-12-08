@@ -3,3 +3,4 @@
 test_gen*
 .venv
 .pytest_cache
+*/__pycache__/
