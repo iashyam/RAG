@@ -7,10 +7,9 @@ import ast
 
 @dataclass
 class Case:
-
     #inputs
     args: Tuple[Any, ...]
-    want: Any | Tuple[Any]
+    want: Any | Tuple[Any] | None = None
 
     kwargs: dict[str, Any] | None = field(default_factory=dict)
     exception: Type[Exception] | Tuple[Type[Exception], ...] = Exception
@@ -29,7 +28,6 @@ def RUN(function: Callable, test_cases: list[Case]):
 
 
 def test_simplify():
-
 
     test_cases = [
         {

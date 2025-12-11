@@ -1,17 +1,25 @@
 import json
+import math
 from pathlib import Path
 
-search_query = "Avatar"
+def f(a,b):
+    return a/b
 
+prod = 1
+max_p = 0.99999
+n = 50
+for i in range(n):
 
-with open("data/movies.json", "r", encoding="utf-8") as f:
-    total_json = f.read()
+    prod *= (365-i)/365
 
-movies_json = json.loads(total_json)
-movies =  movies_json["movies"]
+print(1-prod)
+print(i)
 
+a = 1
+b = -1
+c = -506
 
-for movie in movies:
-    movie_titles: str = movie['title']
-    if search_query.lower() in movie_titles.lower():
-        print(movie_titles)
+d = b**2 - a*4*c
+print(-b/(2*a) + math.sqrt(d)/(2*a))
+
+print(1-(364/365)**50)
