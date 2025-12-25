@@ -1,9 +1,7 @@
-from search_json import search_movies, InvertedIndex
+from keyword_search_utils import search_movies, InvertedIndex, BM25_B, BM25_K1
 from pathlib import Path
 from helpers import tokenise
 import string
-
-BM25_K1 = 1.5
 
 movies_file_path = Path("data/movies.json")
 
@@ -47,14 +45,14 @@ def tf_handler(doc_id, term):
     except Exception as e:
         print(e); exit(1)
 
-def bm25tf_handler(doc_id, term, k1=BM25_K1):
+def bm25tf_handler(doc_id, term, k1=BM25_K1, b=BM25_B):
     inv_idx = InvertedIndex()
 
     try:
-        inv_idx.load()
-        tf = inv_idx.get_tf(doc_id, term)
-        bm25tf = (tf * (k1 + 1)) / (tf + k1)
-        print(f"BM25 TF score of '{term}' in document '{doc_id}': {bm25tf:.2f}")    
+       inv_idx.load()
+       tf_component = inv_idx.get_bm25_tf(doc_id, term, b, k1)
+       print(f"BM25 TF score of '{term}' in document '{doc_id}': {tf_component:.2f}")    
+
     except Exception as e:
         print(e); exit(1)
 
@@ -79,6 +77,21 @@ def tf_idf_handler(doc_id, term):
         print(f"TF-IDF score of '{term}' in document '{doc_id}': {tf_idf:.2f}")
     except Exception as e:
         print(e); exit(1)
+
+
+def bm25_handler(query, limit):
+    inv_idx = InvertedIndex()
+    try:
+        inv_idx.load()
+        sorted_doc = inv_idx.bm25_search(query)
+        for i, (key, value) in enumerate(sorted_doc.items()):
+            print(f"{i+1}. ({key}) {inv_idx.index[key]["title"]} - score {value:.2f}")
+            if i>limit:
+                break
+
+    except Exception as e:
+        print(e); exit(1)
+
 
 
 def bm25idf_handler(term):

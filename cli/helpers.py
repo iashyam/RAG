@@ -1,5 +1,19 @@
 import string
 from nltk.stem import PorterStemmer
+from pathlib import Path
+
+def get_stop_words(file: Path) -> list[str]:
+    ''' you know what it does'''
+    if not file.exists():
+        raise FileNotFoundError(f"file {file} doesn't exists")
+    
+    with open(file, "r", encoding="utf-8") as f:
+        stop_words = []
+        for line in f:
+            stop_words.append(line.strip())
+        return stop_words
+
+STOP_WORDS = get_stop_words(Path("data/stop_words.txt"))
 
 def simplify(s: str):
     '''remove punctuations and make lowercase for a string'''
@@ -17,7 +31,7 @@ def tokenise(s: str) -> list[str]:
     ''' breaks the string into chuncks of test '''
     simple_string = simplify(s)
     tokens = simple_string.split()
-    tokens = [stem(token) for token in tokens]
+    tokens = [stem(token) for token in tokens if token not in STOP_WORDS]
     return tokens
 
 def add(a: int, b: int) -> int:
