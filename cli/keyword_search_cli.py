@@ -12,6 +12,7 @@ def main() -> None:
 
     
     idf_parser = subparsers.add_parser("idf", help="get idf")
+    idf_parser = subparsers.add_parser("varify", help="Verify model")
     idf_parser.add_argument("term", type=str, help="idf query")
 
     bm25idf_parser = subparsers.add_parser("bm25idf", help="get BM 25 IDF")
@@ -56,6 +57,8 @@ def main() -> None:
             tf_idf_handler(args.doc_id, args.term)
         case "bm25search":
             bm25_handler(args.query, args.limit)
+        case "varify":
+            varify_model()
         case _:
             parser.print_help()
 

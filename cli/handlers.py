@@ -103,3 +103,16 @@ def bm25idf_handler(term):
     except Exception as e:
         print(e); exit(1)
 
+
+def chunk_handler(text, chunk_size: int = 200, overlap: int = 0):
+    words = text.split()
+    chunked_text = []
+    for i in range(0, len(words), chunk_size):
+        if i>overlap:
+            chunked_text.append(" ".join(words[i-overlap:i+chunk_size-overlap]))
+        else:
+            chunked_text.append(" ".join(words[:i+chunk_size]))
+    print(f"Chunking {len(text)} characters")
+    for i, chunk in enumerate(chunked_text):
+        print(f"{i+1}. {chunk}")
+    return chunked_text

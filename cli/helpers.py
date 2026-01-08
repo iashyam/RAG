@@ -1,6 +1,19 @@
 import string
 from nltk.stem import PorterStemmer
 from pathlib import Path
+import numpy as np 
+
+def similarity(a: np.ndarray, b: np.ndarray) -> float:
+    ''' returns the similarity between two vectors '''
+    if a.shape != b.shape:
+        raise ValueError("Vectors must have the same shape")
+
+    norm_a = np.linalg.norm(a)
+    norm_b = np.linalg.norm(b)
+    if norm_a == 0 or norm_b == 0:
+        return 0.0
+    return np.dot(a, b) / (norm_a * norm_b)
+
 
 def get_stop_words(file: Path) -> list[str]:
     ''' you know what it does'''
