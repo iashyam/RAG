@@ -3,7 +3,7 @@
 import argparse
 from lib.semantic_search import SemanticSearch
 from lib.semantic_search import embed, verify_embeddings, embed_query_text, search
-from handlers import chunk_handler
+from handlers import chunk_handler, semantic_chunk_handler
 
 def verify_model():
     search = SemanticSearch()
@@ -23,6 +23,12 @@ def main():
     chunk_parser.add_argument("text", type=str, help="text to chunk")
     chunk_parser.add_argument("--chunk-size", type=int, default=200, help="chunk size")
     chunk_parser.add_argument("--overlap", type=int, default=0, help="overlap")
+
+    semantic_chunk_parser = subparsers.add_parser("semantic_chunk", help="semantic_chunk text")
+    semantic_chunk_parser.add_argument("text", type=str, help="text to semantic_chunk")
+    semantic_chunk_parser.add_argument("--max-chunk-size", type=int, default=4, help="max size")
+    semantic_chunk_parser.add_argument("--overlap", type=int, default=0, help="overlap")
+
 
     search_parser = subparsers.add_parser("search", help="search")
     search_parser.add_argument("query", type=str, help="query to search")
@@ -46,6 +52,8 @@ def main():
             search(args.query, args.limit)
         case "chunk":
             chunk_handler(args.text, args.chunk_size, args.overlap)
+        case "semantic_chunk":
+            semantic_chunk_handler(args.text, args.max_chunk_size, args.overlap)
         case _:
             parser.print_help()
 

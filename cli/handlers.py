@@ -1,6 +1,7 @@
 from keyword_search_utils import search_movies, InvertedIndex, BM25_B, BM25_K1
 from pathlib import Path
 from helpers import tokenise
+import re
 import string
 
 movies_file_path = Path("data/movies.json")
@@ -113,6 +114,21 @@ def chunk_handler(text, chunk_size: int = 200, overlap: int = 0):
         else:
             chunked_text.append(" ".join(words[:i+chunk_size]))
     print(f"Chunking {len(text)} characters")
+    for i, chunk in enumerate(chunked_text):
+        print(f"{i+1}. {chunk}")
+    return chunked_text
+
+def semantic_chunk_handler(text, max_chunk_size: int = 200, overlap: int = 0):
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    chunked_text = []
+    for i in range(0, len(sentences), max_chunk_size):
+        if i>overlap:
+            chunked_text.append(" ".join(sentences[i-overlap:i+max_chunk_size-overlap]))
+        else:
+            chunked_text.append(" ".join(sentences[:i+max_chunk_size]))
+    if i!=0 and i!=len(sentences):
+        chunked_text.append(" ".join(sentences[i:]))
+    print(f"Semantically chunking {len(text)} characters")
     for i, chunk in enumerate(chunked_text):
         print(f"{i+1}. {chunk}")
     return chunked_text

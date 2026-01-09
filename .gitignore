@@ -7,3 +7,5 @@ test_gen*
 __pycache__
 temp*
 *.pyc
+cache/
+.DS_Store
