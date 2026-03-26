@@ -1,1 +1,3 @@
 # RAG
+
+Simple RAG pipeline
