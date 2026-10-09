@@ -10,7 +10,9 @@ Ambitious MLOps Engineer driven to bridge the gap between experimental modeling 
 - **Machine Learning & AI:** PyTorch, Deep Learning, Transfer Learning, PINN (Physics Informed Neural Networks), RAG (Retrieval-Augmented Generation), LLMs, Computer Vision.
 - **Data Engineering & Backend:** Python, Pandas, NumPy, FastAPI, Flask, OCR, SQL.
 
-### Projects
+### Experience
+
+#### McDermott International (2024-)
 
 #### AutoReport | Automated Data Analytics & RAG Platform
 *Keywords: RAG, NLP, Docker, CI/CD, Flask, Data Engineering*
